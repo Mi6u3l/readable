@@ -5,14 +5,14 @@ import {connect} from 'react-redux'
 import {receivePosts} from '../actions'
 import * as postsAPIUtil from '../utils/api';
 
-
 class App extends Component {
+
   componentDidMount() {
-    const { getPosts } = this.props
+    const {getPosts} = this.props
     getPosts()
   }
   render() {
-    const { posts } = this.props
+    const {posts} = this.props
     console.log(posts);
     return (
       <div className="App">
@@ -20,16 +20,25 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          hello
-        </p>
+        {posts
+          ? <ul>
+              {posts.map((post) => (
+                <li key={post.id}>
+                {post.title}
+                </li>
+              ))}
+            </ul>
+          : <div>Loading posts...</div>
+        }
       </div>
     );
   }
 }
 
 function mapStateToProps({posts}) {
-  return {posts: posts}
+  return {
+    posts: posts[Object.keys(posts)]
+  }
 }
 
 function mapDispatchToProps(dispatch) {

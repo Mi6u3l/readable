@@ -7,3 +7,5 @@ const headers = {
 
 export const getPosts = () => fetch(`${api}/posts`, {headers})
   .then((res) => res.json())
+  
+ 
