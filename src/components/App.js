@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import logo from '../logo.svg';
 import '../App.css';
 import {connect} from 'react-redux'
-import {receivePosts} from '../actions'
-import * as postsAPIUtil from '../utils/api';
+import {fetchPosts} from '../actions'
 
 class App extends Component {
 
@@ -13,7 +12,6 @@ class App extends Component {
   }
   render() {
     const {posts} = this.props
-    console.log(posts);
     return (
       <div className="App">
         <header className="App-header">
@@ -43,9 +41,7 @@ function mapStateToProps({posts}) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPosts: () => postsAPIUtil
-      .getPosts()
-      .then(posts => dispatch(receivePosts(posts)))
+    getPosts: () => dispatch(fetchPosts())
   }
 }
 
