@@ -4,24 +4,32 @@ import {fetchPosts} from '../actions'
 
 class ListPosts extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     const {getPosts} = this.props
     getPosts()
+      if (this.props.match.params.category) {
+      console.log(this.props.match.params.category)
+    }
+
+  }
+
+  componentDidUpdate() {
+  
   }
   render() {
     const {posts} = this.props
     return (
-    <div>
+      <div>
         {posts
           ? <ul>
               {posts.map((post) => (
                 <li key={post.id}>
-                {post.title}
+                  {post.title}
                 </li>
               ))}
             </ul>
           : <div>Loading posts...</div>
-        }
+}
       </div>
     );
   }
@@ -35,7 +43,8 @@ function mapStateToProps({posts}) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPosts: () => dispatch(fetchPosts())
+    getPosts: () => dispatch(fetchPosts()),
+    getPostsByCategory: (category) => dispatch(fetchPosts(category))
   }
 }
 
