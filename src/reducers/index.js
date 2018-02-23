@@ -1,24 +1,18 @@
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 
-import {
-  GET_POSTS
-} from '../actions'
+import {GET_POSTS} from '../actions'
 
-
-function posts (state = {}, action) {
-const { posts } = action
+function posts(state = {}, action) {
+  const {posts} = action
   switch (action.type) {
-    case GET_POSTS :
-    return {
+    case GET_POSTS:
+      return {
         ...state,
         [posts]: posts
-    }
-    default :
+      }
+    default:
       return state
   }
 }
 
-
-export default combineReducers({
-  posts
-})
+export default combineReducers({posts})
