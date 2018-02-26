@@ -11,15 +11,14 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
         <div className="App">
           <header>
+            <Link to='/'>Home</Link>
             <ListCategories/>
           </header>
-              <Route path="/" exact component={ListPosts} />
-              <Route path="/:category" exact component={props => <ListPosts {...props} />} />
+          <Route path="/" exact component={ListPosts}/>
+          <Route path="/:category" exact component={props => <ListPosts {...props}/>}/>
         </div>
-      </BrowserRouter>
     );
   }
 }

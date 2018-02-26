@@ -1,21 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {fetchPosts} from '../actions'
+import {fetchPosts, fetchPostsByCategory} from '../actions'
 
 class ListPosts extends Component {
 
   componentWillMount() {
-    const {getPosts} = this.props
-    getPosts()
-      if (this.props.match.params.category) {
-      console.log(this.props.match.params.category)
+    const {getPosts, getPostsByCategory} = this.props
+    if (this.props.match.params.category) {
+      getPostsByCategory(this.props.match.params.category)
+    } else {
+      getPosts()
     }
 
   }
 
-  componentDidUpdate() {
-  
-  }
+  componentDidUpdate() {}
   render() {
     const {posts} = this.props
     return (
@@ -35,16 +34,16 @@ class ListPosts extends Component {
   }
 }
 
-function mapStateToProps({posts}) {
+function mapStateToProps(state) {
   return {
-    posts: posts[Object.keys(posts)]
+    posts: state.posts[Object.keys(state.posts)]
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: () => dispatch(fetchPosts()),
-    getPostsByCategory: (category) => dispatch(fetchPosts(category))
+    getPostsByCategory: (category) => dispatch(fetchPostsByCategory(category))
   }
 }
 

@@ -10,6 +10,7 @@ class ListCategories extends Component {
     const {getCategories} = this.props
     getCategories()
   }
+  
   render() {
     const {categories} = this.props
     return (
