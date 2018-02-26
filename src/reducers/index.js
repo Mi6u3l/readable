@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 
-import {GET_POSTS,GET_CATEGORIES,GET_POSTS_CATEGORY} from '../actions'
+import {GET_POSTS,GET_POST,GET_CATEGORIES,GET_POSTS_CATEGORY} from '../actions'
 
 function categories(state = {}, action) {
   const {categories} = action
@@ -16,16 +16,19 @@ function categories(state = {}, action) {
 }
 
 function posts(state = {}, action) {
-  const {posts} = action
+  console.log('action', action);
+  const {posts, post} = action
   switch (action.type) {
     case GET_POSTS:
+      return posts
+
+    case GET_POST:
       return {
-        [posts]: posts
+        ...state,
+        [action.post.id]: post
       }
      case GET_POSTS_CATEGORY:
-      return {
-        [posts]: posts
-      }
+      return posts
     default:
       return state
   }

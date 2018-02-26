@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {fetchPosts, fetchPostsByCategory} from '../actions'
+import { Link } from 'react-router-dom';
 
 class ListPosts extends Component {
 
@@ -14,20 +15,20 @@ class ListPosts extends Component {
 
   }
 
-  componentDidUpdate() {}
   render() {
     const {posts} = this.props
     return (
       <div>
-        {posts
+        {posts && posts.length > 0
           ? <ul>
               {posts.map((post) => (
                 <li key={post.id}>
-                  {post.title}
+                  <Link to={`/posts/${post.id}`}>{post.title}</Link>
+
                 </li>
               ))}
             </ul>
-          : <div>Loading posts...</div>
+          : <div>Looking for posts...</div>
 }
       </div>
     );
@@ -35,8 +36,9 @@ class ListPosts extends Component {
 }
 
 function mapStateToProps(state) {
+  const posts = state.posts;
   return {
-    posts: state.posts[Object.keys(state.posts)]
+    posts: posts
   }
 }
 
