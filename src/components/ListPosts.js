@@ -4,7 +4,7 @@ import {fetchPosts, fetchPostsByCategory} from '../actions'
 
 class ListPosts extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     const {getPosts, getPostsByCategory} = this.props
     if (this.props.match.params.category) {
       getPostsByCategory(this.props.match.params.category)
