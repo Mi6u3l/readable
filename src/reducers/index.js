@@ -16,7 +16,6 @@ function categories(state = {}, action) {
 }
 
 function posts(state = {}, action) {
-  console.log('action', action);
   const {posts, post} = action
   switch (action.type) {
     case GET_POSTS:

@@ -1,9 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {fetchPosts, fetchPostsByCategory} from '../actions'
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import Modal from 'react-modal'
+import AddPost from './AddPost'
 
 class ListPosts extends Component {
+  state = {
+    postModalOpen: false
+  }
+  openPostModal = () => {
+    this.setState(() => ({postModalOpen: true}))
+  }
+  closePostModal = () => {
+    this.setState(() => ({postModalOpen: false}))
+  }
 
   componentDidMount() {
     const {getPosts, getPostsByCategory} = this.props
@@ -17,6 +28,8 @@ class ListPosts extends Component {
 
   render() {
     const {posts} = this.props
+    const {postModalOpen} = this.state
+
     return (
       <div>
         {posts && posts.length > 0
@@ -30,16 +43,22 @@ class ListPosts extends Component {
             </ul>
           : <div>Looking for posts...</div>
 }
+        <button onClick={() => this.openPostModal()} className='open-add'></button>
+        <Modal
+          className='modal'
+          overlayClassName='overlay'
+          isOpen={postModalOpen}
+          onRequestClose={this.closePostModal}
+          contentLabel='Modal'>
+          <AddPost closePostModal={this.closePostModal}/>
+        </Modal>
       </div>
     );
   }
 }
-
 function mapStateToProps(state) {
   const posts = state.posts;
-  return {
-    posts: posts
-  }
+  return {posts: posts}
 }
 
 function mapDispatchToProps(dispatch) {
