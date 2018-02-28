@@ -30,9 +30,7 @@ class PostDetail extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log('state', state)
     const post = state.posts[ownProps.match.params.id];
-
     return {post: post}
 }
 

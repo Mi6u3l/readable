@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {createPost} from '../actions'
+import uuidv1 from 'uuid/v1';
 import serializeForm from 'form-serialize'
 
 
@@ -7,15 +9,24 @@ class AddPost extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
+        const {addPost, closePostModal} = this.props
         const values = serializeForm(e.target, {hash: true})
-        console.log(values);
+        const body = {
+            id: uuidv1(),
+            timestamp: Date.now(),
+            title: values.title,
+            body: values.body,
+            author: values.author,
+            category: values.category
+        }
+       
+        addPost(body);
+        closePostModal();
     }
 
     createSelectItems() {
-        console.log(this.props.categories);
         let categories = this.props.categories.categories;
         let items = [];
-        console.log(categories);
         for (let i = 0; i < categories.length; i++) {
             items.push(
                 <option key={categories[i].path} value={categories[i].path}>{categories[i].name}</option>
@@ -60,4 +71,10 @@ function mapStateToProps({categories}) {
     }
 }
 
-export default connect(mapStateToProps)(AddPost)
+function mapDispatchToProps(dispatch) {
+  return {
+    addPost: (body) => dispatch(createPost(body))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPost)
